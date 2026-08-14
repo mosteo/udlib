@@ -17,6 +17,20 @@
 # SYMBOLS_DIR, never uploaded anywhere, and must be KEPT: losing them
 # makes that build's stack traces unreadable forever.
 #
+# The build prints "Warning: The generated ELF library contains
+# unobfuscated DWARF debugging information" three times (one per ABI)
+# and it is a false alarm on Android specifically: gen_snapshot skips
+# --strip on this platform on purpose (Flutter's own build.dart says
+# so -- "we let AGP handle stripping of debug symbols"), and AGP does,
+# during the Gradle release packaging that runs right after. Verified
+# by unzipping a built .aab: every .so under base/lib/ comes out
+# `file`-reported as "stripped", with no .debug_* sections in
+# `readelf -S`. --obfuscate is doing its job too -- a Dart class name
+# added the same day does not show up in `strings` on the resulting
+# libapp.so. Nothing here needs --strip added; that flag is for the
+# non-Apple-non-Android branch (desktop), which these apps do not
+# build for release.
+#
 # Usage: <app>/dev/build-appbundle.sh [extra flutter build args...]
 # Env: AAB_OUT_DIR, SYMBOLS_DIR, ENV_FILE, EXPORT_AAB (default 1; set
 # to 0 to leave the bundle at Gradle's local output path)

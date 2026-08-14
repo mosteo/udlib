@@ -36,9 +36,14 @@ for track in "${TRACKS[@]:-internal}"; do
 done
 
 # --yes on purpose: these are the app's own testing tracks, opted-in
-# testers only, never seeing a policy review, and the next upload just
-# replaces this one. For production, call upload_play_release.py
-# directly and answer the prompt.
+# testers only, and the next upload just replaces this one. For
+# production, call upload_play_release.py directly and answer the
+# prompt.
+#
+# One thing to know about closed tracks (alpha/beta): Play may hold the
+# FIRST-EVER push to one for a policy review before testers can install
+# it. Internal testing never does, and reruns after that first one
+# don't either.
 APP_REPO_ROOT="$APP_REPO_ROOT" "$VENV/bin/python3" \
   "$TOOLING/upload_play_release.py" \
   --aab "$AAB" \
