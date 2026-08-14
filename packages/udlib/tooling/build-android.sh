@@ -8,7 +8,9 @@
 # gates its dev affordances on a plain constant instead of kDebugMode.
 #
 # Usage: <app>/dev/build-android.sh [extra flutter build args...]
-# Env: APK_OUT_DIR, ENV_FILE (see the app's app.env for defaults)
+# Env: APK_OUT_DIR, ENV_FILE, SUFFIX (appended to the APK name, to keep
+# variant builds apart -- e.g. SUFFIX=-tiles dev/build-android.sh
+# --dart-define=DISCOVERY=tiles)
 
 set -euo pipefail
 
@@ -25,4 +27,4 @@ flutter build apk --release \
 
 mkdir -p "$OUT_DIR"
 copy_artifact build/app/outputs/flutter-apk/app-release.apk \
-  "$OUT_DIR/$APP_NAME-$VERSION.apk"
+  "$OUT_DIR/$APP_NAME-$VERSION${SUFFIX:-}.apk"

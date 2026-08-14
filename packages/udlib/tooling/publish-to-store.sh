@@ -16,7 +16,12 @@ OUT_DIR="$(udlib_aab_out_dir)"
 AAB="$OUT_DIR/$APP_NAME-$VERSION.aab"
 VENV="$APP_REPO_ROOT/admin/.venv"
 
-if [ -f "$AAB" ]; then
+# Reuse is convenient and is what sanlo and coldsleep have always done,
+# but it has a sharp edge: build, then edit code without bumping the
+# version, then publish, and the upload is the older bits under the
+# same name. birradar has always rebuilt for that reason, so it sets
+# REUSE_AAB=0 rather than being quietly converted.
+if [ "${REUSE_AAB:-1}" = 1 ] && [ -f "$AAB" ]; then
   echo ">> Reusing $AAB"
 else
   AAB_OUT_DIR="$OUT_DIR" "$TOOLING/build-appbundle.sh" "$@"
