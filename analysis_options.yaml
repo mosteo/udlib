@@ -1,0 +1,20 @@
+# Lints and formatting for every package in this repo.
+#
+# The analyzer walks up from each package, so one file at the root
+# covers both packages and cannot drift between them.
+#
+# Carried over from birradar, the only one of the three sibling apps
+# that had customised this at all -- sanlo and coldsleep still ship
+# the untouched `flutter create` template. The 79-column limit is a
+# project-wide rule and applies to Markdown and shell too.
+
+include: package:flutter_lints/flutter.yaml
+
+formatter:
+  page_width: 79
+
+linter:
+  rules:
+    - prefer_single_quotes
+    - directives_ordering
+    - unawaited_futures

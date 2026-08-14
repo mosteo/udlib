@@ -1,0 +1,14 @@
+# Dart/Flutter build state. Nothing generated is versioned here.
+.dart_tool/
+.packages
+.flutter-plugins-dependencies
+build/
+
+# Library packages, not apps: the consuming app's lock file is what
+# pins a build, so locking here would only go stale.
+pubspec.lock
+
+# Editors
+.idea/
+*.iml
+.vscode/

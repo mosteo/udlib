@@ -1,0 +1,32 @@
+name: udlib_riverpod
+description: >-
+  Riverpod wiring on top of udlib: shared preferences, locale override
+  and location providers. Consumed by birradar and sanlo, not by
+  coldsleep.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_riverpod: ^2.6.1
+  shared_preferences: ^2.5.5
+
+  # Relative path on purpose: pub resolves it inside whichever git
+  # checkout it fetched, so an app pinning one ref gets both packages
+  # from that same ref and they cannot drift apart.
+  udlib:
+    path: ../udlib
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  packages:
+    runs-on: ubuntu-latest
+    strategy:
+      # Both packages always run, so one failure does not hide the
+      # other's result.
+      fail-fast: false
+      matrix:
+        package: [udlib, udlib_riverpod]
+    defaults:
+      run:
+        working-directory: packages/${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.44.2
+          cache: true
+      - run: flutter pub get
+      - run: dart format --set-exit-if-changed .
+      - run: flutter analyze
+      # Guarded because the packages start empty and fill up one
+      # extraction phase at a time; `flutter test` fails outright when
+      # there is no test file yet. Drop the guard once phase 2 lands.
+      - name: Test
+        run: |
+          if ls test/*_test.dart >/dev/null 2>&1; then
+            flutter test
+          else
+            echo 'no tests in this package yet'
+          fi
