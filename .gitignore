@@ -12,3 +12,7 @@ pubspec.lock
 .idea/
 *.iml
 .vscode/
+
+# Python bytecode from running the tooling scripts locally.
+__pycache__/
+*.pyc
