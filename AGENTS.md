@@ -1,0 +1,21 @@
+## Rules
+
+**Everything here is in English** — Dart, comments, doc comments,
+tooling, error messages and Markdown. No exceptions. The apps keep
+their own language; sanlo targets the Spanish market and uses Spanish
+in parts of its code and docs, and that does not change. When code
+moves in from coldsleep, its Spanish comments are translated, and the
+*reasoning* is translated, not just the sentence: those comments are
+worth having precisely because they explain why.
+
+**Only code that already exists in two or more of the apps comes
+here.** Extraction must not change behaviour: after an app migrates,
+its own unmodified test suite is the proof. Things that live in a
+single app today are noted as candidates and wait their turn.
+
+**Some things look generic and are not.** coldsleep's `class Ui` reads
+like a design-token file but is the visual identity of one retro app,
+with contrast ratios measured against its own background. sanlo's
+`festivalDayRolloverHour = 6` is Huesca folk knowledge, not a date
+utility. birradar's `VenueCache` is not an LRU, it is beer-price
+domain logic. These stay where they are.
