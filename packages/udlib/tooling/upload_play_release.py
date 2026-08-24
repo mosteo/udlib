@@ -133,6 +133,18 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    # Line-buffer stdout so it interleaves with stderr in the order
+    # things actually happened.
+    #
+    # Without this, a piped run (which is how the app wrappers are
+    # normally read, and how CI captures them) shows the whole plan
+    # block AFTER an error from the API: stderr is unbuffered, stdout
+    # is block-buffered into a pipe and only flushes at exit. A failed
+    # upload therefore ended with a tidy summary under the error,
+    # which reads as a result rather than as the plan it is -- see the
+    # label below, which used to make that misreading worse.
+    sys.stdout.reconfigure(line_buffering=True)
+
     args = parse_args()
     # dict.fromkeys, not set(): de-duplicates but keeps the order the
     # tracks were given, so the printed plan matches what was asked.
@@ -157,10 +169,17 @@ def main() -> int:
     service = build("androidpublisher", "v3", credentials=creds)
     edits = service.edits()
 
-    print(f"Package:  {args.package_name}")
-    print(f"AAB:      {args.aab}")
-    print(f"Tracks:   {', '.join(tracks)}")
-    print(f"Status:   {args.status}")
+    # "Status: completed" was the old wording, and it was a trap: it
+    # is Play's RELEASE status for the tracks below, set before
+    # anything is uploaded, but both the word and the value read as
+    # "the upload finished fine". Labelled as an intention now, so it
+    # cannot be mistaken for an outcome even when it is the last line
+    # left on screen.
+    print("About to upload:")
+    print(f"  Package:       {args.package_name}")
+    print(f"  AAB:           {args.aab}")
+    print(f"  Tracks:        {', '.join(tracks)}")
+    print(f"  Release state: {args.status} (once uploaded)")
     if not args.yes:
         reply = input("Proceed with this upload? [y/N] ").strip().lower()
         if reply != "y":
