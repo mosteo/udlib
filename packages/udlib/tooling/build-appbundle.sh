@@ -14,8 +14,11 @@
 #
 # --split-debug-info writes the Dart symbol maps needed to read a
 # future crash report from this exact build. They are archived under
-# SYMBOLS_DIR, never uploaded anywhere, and must be KEPT: losing them
-# makes that build's stack traces unreadable forever.
+# SYMBOLS_DIR (local disk, one directory per version) and never
+# uploaded anywhere. Losing a version's directory costs the ability to
+# decode that build's stack traces, and nothing else -- it does not
+# affect the build itself, which is why they no longer live on the
+# network drive.
 #
 # The build prints "Warning: The generated ELF library contains
 # unobfuscated DWARF debugging information" three times (one per ABI)
@@ -65,7 +68,7 @@ app-release.aab"
 
 if [ "${EXPORT_AAB:-1}" = 0 ]; then
   echo ">> $LOCAL_AAB"
-  echo ">> symbols archived at $SYMBOLS (keep -- never upload)"
+  echo ">> symbols at $SYMBOLS (never upload)"
   exit 0
 fi
 
@@ -74,5 +77,5 @@ OUT="$OUT_DIR/$APP_NAME-$VERSION.aab"
 copy_artifact "$LOCAL_AAB" "$OUT"
 udlib_print_signer "$OUT"
 
-echo ">> symbols archived at $SYMBOLS (keep: without them this"
-echo "   build's stack traces are unreadable forever)"
+echo ">> symbols at $SYMBOLS (needed to decode this build's stack"
+echo "   traces; never upload them)"

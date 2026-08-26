@@ -47,11 +47,17 @@ udlib_aab_out_dir() {
 }
 
 # Dart symbol maps for de-symbolicating a future crash report from one
-# exact build. Archived, NEVER uploaded, and must be kept: losing them
-# makes that build's Dart stack traces unreadable forever.
+# exact build. NEVER uploaded. Local disk, not the rclone mount: these
+# are worth keeping while a build is out there, but not worth a slot on
+# the network drive, and nothing has ever needed one back.
+#
+# Still one directory per version, because that is what makes them
+# usable at all: symbols only decode the build they came from, so a
+# flat directory would have each release silently overwrite the
+# previous one and leave older builds still on testers' phones
+# unreadable.
 udlib_symbols_dir() {  # $1 = version
-  echo "${SYMBOLS_DIR:-\
-$HOME/cloud/ORIG/drive/JANO/$APP_NAME-symbols/$1}"
+  echo "${SYMBOLS_DIR:-$HOME/tmp/android-symbols/$APP_NAME/$1}"
 }
 
 # Semver only: pubspec's build number (+N) is a store detail, not part
