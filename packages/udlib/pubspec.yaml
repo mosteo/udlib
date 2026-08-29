@@ -29,7 +29,12 @@ dependencies:
   # udlib_riverpod instead.
   url_launcher: ^6.3.2
   qr_flutter: ^4.1.0
-  share_plus: ^11.1.0
+  # >=13.0.0, not the ^11.1.0 that resolves standalone: sanlo/pilares
+  # also depend on geolocator, whose win32 ^6.0.0 (via
+  # package_info_plus) conflicts with share_plus <13's win32 ^5.5.3.
+  # Pinned here, not left to each app to discover, so this package
+  # resolves the same way everywhere it is used.
+  share_plus: ^13.3.0
 
 dev_dependencies:
   flutter_test:

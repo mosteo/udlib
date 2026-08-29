@@ -8,6 +8,19 @@ governs what belongs here.
 
 Versions are git tags; there is no package version bump per release.
 
+## v0.7.1 — 2026-08-29
+
+- `share_plus` bumped to `^13.3.0` (was `^11.1.0`, the version that
+  resolves for `udlib` standalone): any app that also depends on
+  `geolocator` (sanlo, pilares) needs `win32 ^6.0.0` via
+  `package_info_plus`, which conflicts with `share_plus`'s own
+  `win32 ^5.5.3` below 13. Pinned in this package rather than left for
+  each consuming app to hit and work around.
+- `ExternalLinkTile`'s doc comments updated to the current, non-
+  deprecated `share_plus` API (`SharePlus.instance.share(ShareParams(
+  uri: ...))`) — `Share.share` still works but is deprecated as of
+  the version above.
+
 ## v0.7.0 — 2026-08-29
 
 - `ExternalLinkTile` (`package:udlib`): a `ListTile`-shaped row that

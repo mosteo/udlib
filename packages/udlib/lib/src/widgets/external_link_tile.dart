@@ -5,8 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 /// A settings-style row for a link to somewhere outside the app:
 /// tapping it opens [url], and its trailing edge carries a share
 /// button (the OS share sheet, via whatever [onShare] wires in --
-/// typically `share_plus`'s `Share.share`) and a QR button (shows
-/// [url] as a scannable code in a dialog).
+/// typically `share_plus`'s `SharePlus.instance.share(ShareParams(uri:
+/// Uri.parse(url)))`) and a QR button (shows [url] as a scannable
+/// code in a dialog).
 ///
 /// Built for Pilares' handful of "here is a link, go read it
 /// elsewhere" rows (the official programme, the Play Store listing,
@@ -44,7 +45,8 @@ class ExternalLinkTile extends StatelessWidget {
   final String? subtitle;
   final String url;
 
-  /// Wire the OS share sheet here, e.g. `(url) => Share.share(url)`.
+  /// Wire the OS share sheet here, e.g. `(url) =>
+  /// SharePlus.instance.share(ShareParams(uri: Uri.parse(url)))`.
   final Future<void> Function(String url) onShare;
 
   final Color? tileColor;
