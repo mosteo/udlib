@@ -1,7 +1,8 @@
 name: udlib
 description: >-
   Shared Flutter code for the Unexpected Developments apps: changelog,
-  error log, locale handling, preference stores and text search.
+  error log, locale handling, preference stores, text search and an
+  external-link tile with share/QR actions.
 publish_to: 'none'
 version: 0.1.0
 
@@ -17,6 +18,18 @@ dependencies:
   # out of here -- see udlib_riverpod for geolocator.
   shared_preferences: ^2.5.5
   intl: ^0.20.2
+
+  # ExternalLinkTile's three: url_launcher and qr_flutter have no
+  # native surface worth mentioning (a link opener, a Dart-only QR
+  # painter). share_plus DOES have one -- an exception to the "no
+  # native side" rule above, judged acceptable because the platform
+  # code involved is minimal (no permissions, no background service,
+  # just invoking the OS share sheet), unlike geolocator's continuous
+  # location tracking, which is why THAT stayed out and went to
+  # udlib_riverpod instead.
+  url_launcher: ^6.3.2
+  qr_flutter: ^4.1.0
+  share_plus: ^11.1.0
 
 dev_dependencies:
   flutter_test:

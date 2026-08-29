@@ -8,6 +8,17 @@ governs what belongs here.
 
 Versions are git tags; there is no package version bump per release.
 
+## v0.7.0 — 2026-08-29
+
+- `ExternalLinkTile` (`package:udlib`): a `ListTile`-shaped row that
+  opens a URL on tap and adds a share button (the OS share sheet, via
+  `share_plus`) and a QR button (shows the link as a QR code, via
+  `qr_flutter`) to its trailing edge. First real Dart export from this
+  package — lands ahead of AGENTS.md's usual "already in two apps"
+  bar by explicit request, built for Pilares' external-link rows
+  (official programme, Play Store listing, privacy policy, poster
+  gallery attribution).
+
 ## v0.6.0 — 2026-08-28
 
 - `tooling/test.sh`: run an app's Flutter test suite with no manual

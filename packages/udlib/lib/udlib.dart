@@ -4,10 +4,15 @@
 /// everything. Individual libraries stay importable on their own for
 /// anyone who wants a narrower dependency.
 ///
-/// Nothing is exported yet -- the extraction lands one phase at a
-/// time, and a phase is only merged once the app it came from passes
-/// its own unmodified test suite against this package.
+/// The rest is still empty -- extraction lands one phase at a time,
+/// and a phase is only merged once the app it came from passes its
+/// own unmodified test suite against this package. `ExternalLinkTile`
+/// is the one exception so far: new code, not an extraction, landed
+/// ahead of the usual "already in two apps" bar by explicit request
+/// (see AGENTS.md and its own doc comment).
 library;
+
+export 'src/widgets/external_link_tile.dart';
 
 // Phase 2: export 'src/l10n/framework_fallbacks.dart';
 // Phase 2: export 'src/l10n/locale_store.dart';
